@@ -9,3 +9,4 @@ python-telegram-bot
 qasync
 newspaper3k
 asyncio
+ta
