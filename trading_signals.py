@@ -140,20 +140,30 @@ def monitor_signals():
 
             btc = get_btc_indicators()
             price, dom = btc.get("price"), btc.get("dominance")
-            if last_btc_price is not None and last_btc_dominance is not None:
-                if price<last_btc_price and dom>last_btc_dominance:
-                    alert = "📡🐋 Whale Hunt: BTC baja pero dominancia sube."
-                    send_telegram_message(alert,
-                                          chat_id=TELEGRAM_CHAT_ID,
-                                          message_thread_id=TELEGRAM_SENALES_THREAD_ID)
-                    flush_logs()
-            last_btc_price, last_btc_dominance = price, dom
+
+            # Asegurarnos de que price y dom no sean None
+            if price is not None and dom is not None:
+                if last_btc_price is not None and last_btc_dominance is not None:
+                    # Asegurarse de que la caída de BTC sea significativa
+                    price_drop_threshold = 0.01  # Umbral para la caída (1%)
+                    dominance_increase_threshold = 0.01  # Umbral para el aumento de dominancia (1%)
+
+                    if (price < last_btc_price * (1 - price_drop_threshold)) and (dom > last_btc_dominance * (1 + dominance_increase_threshold)):
+                        alert = "📡🐋 Whale Hunt: BTC baja más del 1% pero la dominancia sube más del 1%."
+                        send_telegram_message(alert,
+                                              chat_id=TELEGRAM_CHAT_ID,
+                                              message_thread_id=TELEGRAM_SENALES_THREAD_ID)
+                        flush_logs()
+
+                last_btc_price, last_btc_dominance = price, dom
+            else:
+                logging.warning("No se pudieron obtener valores válidos de price o dominance.")
 
         except Exception as e:
             logging.error("Error monitor: %s", e)
             flush_logs()
 
-        if time.time()-last_log>300:
+        if time.time() - last_log > 300:
             logging.info("Monitor activo")
             flush_logs()
             last_log = time.time()

@@ -1,21 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""
-Lógica de Higgs X – Monitor de Trading
-
-Se centra en:
-  - Monitoreo de indicadores técnicos en tiempo real.
-  - Lógica de obtención y cálculo delegada a módulos externos.
-  - Envío de mensajes a Telegram con el estado del mercado.
-"""
-
 import threading
 import time
 import logging
+import asyncio
 from datetime import datetime
 import pytz
 
-from market import fetch_data, start_dominance_monitor  # Asegúrate de importar la función start_dominance_monitor
+from market import fetch_data, start_dominance_monitor
 from indicators import calculate_indicators
 from config import SYMBOL, TIMEFRAME
 from telegram_bot import telegram_bot_loop
@@ -44,7 +34,7 @@ class MarketMonitor:
         # Iniciar el monitor de dominancia de BTC
         start_dominance_monitor()
 
-    def monitor_market(self):
+    async def monitor_market(self):
         while True:
             try:
                 data = fetch_data(SYMBOL, TIMEFRAME)
@@ -64,19 +54,18 @@ class MarketMonitor:
                 )
                 logging.info(general_msg)  # Mostrar en log
 
-                # Enviar mensaje a Telegram
-                self.send_to_telegram(general_msg)
-                time.sleep(10)
+                # Enviar mensaje a Telegram de forma asíncrona
+                await self.send_to_telegram(general_msg)
+                await asyncio.sleep(10)  # Ajusta el sleep para que sea asíncrono
             except Exception as e:
                 logging.error(f"Error: {e}")
                 break
 
-    def send_to_telegram(self, message):
+    async def send_to_telegram(self, message):
         # Llamar al bot de Telegram para enviar el mensaje
         logging.info("Enviando mensaje a Telegram...")
-        # Aquí puedes utilizar tu función para enviar el mensaje a Telegram (ya está definida en telegram_bot.py)
-        telegram_bot_loop()
-
+        # Usar asyncio para llamar al loop asíncrono del bot
+        await telegram_bot_loop(message)  # Asumimos que telegram_bot_loop ahora recibe un mensaje
 
 def run_market_monitor():
     # Iniciar el monitoreo
@@ -85,4 +74,4 @@ def run_market_monitor():
 
 if __name__ == "__main__":
     # Ejecutar la lógica de monitoreo en Railway (sin interfaz)
-    run_market_monitor()
+    asyncio.run(run_market_monitor())  # Usa asyncio.run para correr el monitor
