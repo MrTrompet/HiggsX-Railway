@@ -1,6 +1,5 @@
 import sys
 import asyncio
-from qasync import QEventLoop
 
 # Importa la lógica de monitoreo de mercado
 from interface import MarketMonitor
@@ -11,9 +10,8 @@ from scheduler import scheduler_loop
 
 async def main():
     # Crear el bucle asíncrono
-    loop = QEventLoop()
-    asyncio.set_event_loop(loop)
-    
+    loop = asyncio.get_event_loop()  # Usamos el bucle asíncrono por defecto
+
     # Instanciar el monitor de mercado
     market_monitor = MarketMonitor()
     market_monitor.start_monitoring()  # Inicia el monitoreo en segundo plano
@@ -28,4 +26,4 @@ async def main():
     await loop.run_forever()
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(main())  # Ejecutamos el bucle principal
