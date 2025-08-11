@@ -7,8 +7,10 @@ from interface import MarketMonitor
 from telegram_bot import process_updates
 # Importa el scheduler
 from scheduler import scheduler_loop
+from config import TELEGRAM_HIGGS_THREAD_ID
 
 async def main():
+    print(f"[Config] TELEGRAM_HIGGS_THREAD_ID: {TELEGRAM_HIGGS_THREAD_ID}")  # Aquí va el log
     # Instanciar el monitor de mercado
     market_monitor = MarketMonitor()
     market_monitor.start_monitoring()  # Inicia el monitoreo en segundo plano
