@@ -10,3 +10,8 @@ qasync
 newspaper3k
 asyncio
 ta
+langdetect
+datetime
+mplfinance
+numpy
+# Additional libraries for technical indicators and data processing
