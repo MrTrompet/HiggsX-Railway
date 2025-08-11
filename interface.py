@@ -15,7 +15,7 @@ import logging
 from datetime import datetime
 import pytz
 
-from market import fetch_data
+from market import fetch_data, start_dominance_monitor  # Asegúrate de importar la función start_dominance_monitor
 from indicators import calculate_indicators
 from config import SYMBOL, TIMEFRAME
 from telegram_bot import telegram_bot_loop
@@ -40,6 +40,9 @@ class MarketMonitor:
         if not self.signals_thread_started:
             threading.Thread(target=monitor_signals, daemon=True).start()
             self.signals_thread_started = True
+
+        # Iniciar el monitor de dominancia de BTC
+        start_dominance_monitor()
 
     def monitor_market(self):
         while True:
@@ -72,7 +75,7 @@ class MarketMonitor:
         # Llamar al bot de Telegram para enviar el mensaje
         logging.info("Enviando mensaje a Telegram...")
         # Aquí puedes utilizar tu función para enviar el mensaje a Telegram (ya está definida en telegram_bot.py)
-        telegram_bot_loop(message)
+        telegram_bot_loop()
 
 
 def run_market_monitor():
