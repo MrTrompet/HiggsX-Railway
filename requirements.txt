@@ -6,7 +6,7 @@ pandas
 matplotlib
 python-telegram-bot
 qasync
-newspaper
+newspaper3k
 asyncio
 sys
 langdetect
