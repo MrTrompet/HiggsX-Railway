@@ -4,7 +4,7 @@ import requests
 import logging
 from datetime import datetime, timedelta
 from config import NEWS_API_KEY  # La API key se define en config.py
-from newspaper3k import Article
+from newspaper import Article
 
 logging.basicConfig(level=logging.WARNING, format='%(asctime)s [%(levelname)s] %(message)s')
 
