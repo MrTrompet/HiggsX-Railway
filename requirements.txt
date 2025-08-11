@@ -14,4 +14,6 @@ langdetect
 datetime
 mplfinance
 numpy
-# Additional libraries for technical indicators and data processing
+lxml[html_clean]
+# Additional libraries for technical indicators and data processing 
+# add lxml[html_clean] for HTML parsing in newspaper3k
