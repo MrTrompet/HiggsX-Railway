@@ -7,19 +7,22 @@ async def process_updates(semaphore):
     while True:
         try:
             updates = get_updates(offset)
+            print(f"[Telegram Bot] Recibidos {len(updates)} actualizaciones")  # Log del número de actualizaciones recibidas
             if updates:
                 for update in updates:
                     update_id = update.get("update_id")
+                    print(f"[Telegram Bot] Procesando actualización con ID: {update_id}")  # Log del ID de la actualización
                     async with semaphore:
                         loop = asyncio.get_running_loop()
                         await loop.run_in_executor(None, handle_telegram_message, update)
                     offset = update_id + 1  # Actualiza el offset para futuros mensajes
             await asyncio.sleep(3)
         except Exception as e:
-            print(f"Error en el bucle del bot: {e}")
+            print(f"[Telegram Bot] Error en el bucle del bot: {e}")
             await asyncio.sleep(10)
 
 def telegram_bot_loop(message=None):
+
     """
     Bucle principal para escuchar mensajes de Telegram de forma asíncrona.
     Se utiliza un semáforo para limitar las actualizaciones procesadas simultáneamente.

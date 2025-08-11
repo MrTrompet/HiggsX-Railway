@@ -47,6 +47,7 @@ def fetch_btc_dominance():
     # Si la dominancia ya está cacheada y no expiró, retornarla
     if BTC_DOMINANCE is not None and (current_time - BTC_DOMINANCE_TIMESTAMP) < CACHING_INTERVAL_DOMINANCE:
         return BTC_DOMINANCE
+    
 
     url = "https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest"
     headers = {

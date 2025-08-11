@@ -129,13 +129,15 @@ def handle_telegram_message(update):
     text = (msg.get("text") or "").strip()
     chat_id = msg.get("chat", {}).get("id")
     thread_id = msg.get("message_thread_id")
+    print(f"[Telegram Handler] Thread ID recibido: {thread_id}")  # Esto va a mostrar el thread_id recibido
     user = msg.get("from", {})
     username = user.get("username") or user.get("first_name", "Agente")
     date = msg.get("date", 0)
+    
 
     # Solo procesar dentro del thread privado de Higgs X
     if thread_id != TELEGRAM_HIGGS_THREAD_ID:
-        print(f"Ignorando mensaje en thread {thread_id} (esperaba {TELEGRAM_HIGGS_THREAD_ID})")
+        print(f"[Telegram Handler] Ignorando mensaje en thread {thread_id} (esperaba {TELEGRAM_HIGGS_THREAD_ID})")
         return
 
     if not text or not chat_id or date < START_TIME:
