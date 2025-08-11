@@ -37,7 +37,7 @@ def telegram_bot_loop(message=None):
         # bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
     
     # Luego ejecutamos el ciclo principal de actualizaciones
-    asyncio.run(process_updates(semaphore))
+    asyncio.create_task(process_updates(semaphore))
 
 if __name__ == "__main__":
     telegram_bot_loop()  # Esto ahora ejecutará el bucle de actualizaciones
