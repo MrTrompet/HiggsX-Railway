@@ -8,17 +8,3 @@ python-telegram-bot
 qasync
 newspaper3k
 asyncio
-sys
-langdetect
-mplfinance
-datetime
-threading
-pytz
-telegram
-ta
-telegram.ext
-datetime
-logging
-re
-memoria
-sqlite3
