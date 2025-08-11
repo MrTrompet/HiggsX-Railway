@@ -19,13 +19,22 @@ async def process_updates(semaphore):
             print(f"Error en el bucle del bot: {e}")
             await asyncio.sleep(10)
 
-def telegram_bot_loop():
+def telegram_bot_loop(message=None):
     """
     Bucle principal para escuchar mensajes de Telegram de forma asíncrona.
     Se utiliza un semáforo para limitar las actualizaciones procesadas simultáneamente.
     """
     semaphore = asyncio.Semaphore(5)
+    
+    # Si se pasa un mensaje, procesarlo
+    if message:
+        print(f"Enviando mensaje a Telegram: {message}")
+        # Aquí iría tu lógica para enviar el mensaje al grupo de Telegram (dependiendo de tu implementación)
+        # Ejemplo:
+        # bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
+    
+    # Luego ejecutamos el ciclo principal de actualizaciones
     asyncio.run(process_updates(semaphore))
 
 if __name__ == "__main__":
-    telegram_bot_loop()
+    telegram_bot_loop()  # Esto ahora ejecutará el bucle de actualizaciones

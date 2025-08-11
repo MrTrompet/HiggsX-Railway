@@ -1,3 +1,4 @@
+#indicators.py
 import pandas as pd        
 from ta.momentum import RSIIndicator
 from ta.trend import SMAIndicator, ADXIndicator
@@ -64,6 +65,9 @@ def calculate_indicators(data):
     bb_low = bb_indicator.bollinger_lband().iloc[-1]
     bb_medium = bb_indicator.bollinger_mavg().iloc[-1]
     bb_high = bb_indicator.bollinger_hband().iloc[-1]
+    
+    # Comprobar si la dominancia es válida, si no, asignar un valor predeterminado
+    dominance = market.BTC_DOMINANCE if market.BTC_DOMINANCE is not None else "N/D"
 
     indicators = {
         'price': close.iloc[-1],
@@ -81,7 +85,7 @@ def calculate_indicators(data):
         'bb_medium': bb_medium,
         'bb_high': bb_high,
         'prev_close': close.iloc[-2],
-        'btc_dominance': market.BTC_DOMINANCE  # Valor cacheado actualizado en market.py
+        'btc_dominance': dominance # Valor cacheado actualizado en market.py
     }
     return indicators
 
