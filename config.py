@@ -47,6 +47,8 @@ TELEGRAM_HIGGS_THREAD_ID   = TOPICS["higgs"]
 TELEGRAM_NOTICIAS_THREAD_ID= TOPICS["noticias"]
 TELEGRAM_SENALES_THREAD_ID = TOPICS["senales"]
 
+print(f"[Config] TELEGRAM_HIGGS_THREAD_ID: {TELEGRAM_HIGGS_THREAD_ID}")
+
 # -------------------------------------------------
 # OpenAI API Key
 # -------------------------------------------------
