@@ -37,16 +37,17 @@ TELEGRAM_CHAT_ID = os.getenv('TELEGRAM_CHAT_ID', '-1002534022214')  # chat_id de
 
 # Topics específicos (message_thread_id dentro del grupo)
 TOPICS = {
-    "higgs": os.getenv('TELEGRAM_HIGGS_THREAD_ID', 6),  # ID del topic donde se habla con OpenAI y se piden gráficos
-    "noticias": os.getenv('TELEGRAM_NOTICIAS_THREAD_ID', 24),  # ID del topic para noticias y mensajes de la interfaz
-    "senales": os.getenv('TELEGRAM_SENALES_THREAD_ID', 32)  # ID del topic para señales de trading
+    "higgs": int(os.getenv('TELEGRAM_HIGGS_THREAD_ID', 6)),  # ID del topic donde se habla con OpenAI y se piden gráficos
+    "noticias": int(os.getenv('TELEGRAM_NOTICIAS_THREAD_ID', 24)),  # ID del topic para noticias y mensajes de la interfaz
+    "senales": int(os.getenv('TELEGRAM_SENALES_THREAD_ID', 32))  # ID del topic para señales de trading
 }
 
 # Para mayor comodidad:
-TELEGRAM_HIGGS_THREAD_ID   = TOPICS["higgs"]
-TELEGRAM_NOTICIAS_THREAD_ID= TOPICS["noticias"]
+TELEGRAM_HIGGS_THREAD_ID = TOPICS["higgs"]
+TELEGRAM_NOTICIAS_THREAD_ID = TOPICS["noticias"]
 TELEGRAM_SENALES_THREAD_ID = TOPICS["senales"]
 
+# Este log debería imprimirse ahora en la salida
 print(f"[Config] TELEGRAM_HIGGS_THREAD_ID: {TELEGRAM_HIGGS_THREAD_ID}")
 
 # -------------------------------------------------
