@@ -131,8 +131,12 @@ def handle_telegram_message(update):
     text = (msg.get("text") or "").strip()
     chat_id = msg.get("chat", {}).get("id")
     thread_id = msg.get("message_thread_id")
-    thread_id = int(thread_id)
-    print(f"[Telegram Handler] Thread ID recibido: {thread_id}")  # Esto va a mostrar el thread_id recibido
+    if thread_id is not None:
+        thread_id = int(thread_id)
+        print(f"[Telegram Handler] Thread ID recibido: {thread_id}")
+    else:
+        print(f"[Telegram Handler] Error: No se encontró 'message_thread_id' en el mensaje. Mensaje ignorado.")
+        return  # Salimos si no se encuentra el message_thread_id
     user = msg.get("from", {})
     username = user.get("username") or user.get("first_name", "Agente")
     date = msg.get("date", 0)
