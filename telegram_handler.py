@@ -116,7 +116,9 @@ def get_updates(offset=None):
             timeout=10,
         )
         if resp.status_code == 200:
-            return resp.json().get("result", [])
+            updates = resp.json().get("result", [])
+            print(f"[Telegram] Updates recibidos: {updates}")
+            return updates
         print(f"[Telegram] getUpdates error: {resp.text}")
     except Exception as e:
         print(f"[Telegram] getUpdates fallo: {e}")
@@ -129,6 +131,7 @@ def handle_telegram_message(update):
     text = (msg.get("text") or "").strip()
     chat_id = msg.get("chat", {}).get("id")
     thread_id = msg.get("message_thread_id")
+    thread_id = int(thread_id)
     print(f"[Telegram Handler] Thread ID recibido: {thread_id}")  # Esto va a mostrar el thread_id recibido
     user = msg.get("from", {})
     username = user.get("username") or user.get("first_name", "Agente")
