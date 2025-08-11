@@ -1,7 +1,7 @@
 #requirements.txt
 ccxt
 ta-lib
-openai
+openai==0.28
 requests
 pandas
 matplotlib
@@ -16,4 +16,4 @@ mplfinance
 numpy
 lxml[html_clean]
 # Additional libraries for technical indicators and data processing 
-# add lxml[html_clean] for HTML parsing in newspaper3k
+# add lxml[html_clean] for HTML parsing in newspaper3kv
